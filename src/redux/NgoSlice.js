@@ -7,19 +7,25 @@ const NgoSlice = createSlice({
     initialState: {
 
         ngoState: new NgoModel(),
+        ngoList:[]
     },
 
     reducers: {
         getNgoById: (state, action) => {
             console.log("NgoSlice reducers getNgoById");
             state.ngoState = action.payload;
+        },
+
+        getAllNgo: (state, action) => {
+            console.log('NgoSlice reducers getAllNgo');
+            state.ngoList = action.payload;
         }
     }
 }
 
 );
 
-export const {getNgoById} = NgoSlice.actions;
+export const {getNgoById , getAllNgo} = NgoSlice.actions;
 export default NgoSlice.reducer;
 
 

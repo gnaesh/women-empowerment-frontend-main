@@ -6,10 +6,10 @@ const getNgoByIdService = (ngoid) => {
     console.log(`getNgoByIdService`);
     return axios.get(`/getbyngoid/${ngoid}`);
 }
-// const getAllEmpsService = () => {
-//     console.log(`getEmpByIdService`);
-//     return axios.get(`/emp/getallemps`);
-// }
+const getAllNgoService = () => {
+    console.log(`getNgoByIdService`);
+    return axios.get(`getallngo`);
+}
 
 // const addEmpService = (emp) => {
 //     console.log(`getEmpByIdService`);
@@ -31,4 +31,4 @@ const getNgoByIdService = (ngoid) => {
 //     return axios.post(`/emp/getbyname/${firstName}`);
 // }
 
-export { getNgoByIdService};
+export { getNgoByIdService , getAllNgoService};

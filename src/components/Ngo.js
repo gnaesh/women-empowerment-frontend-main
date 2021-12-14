@@ -1,7 +1,7 @@
-import { getNgoById } from "../redux/NgoSlice";
+import { getNgoById , getAllNgo} from "../redux/NgoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { getNgoByIdService } from "../service/NgoService";
+import { getNgoByIdService, getAllNgoService } from "../service/NgoService";
 
 
 const Ngo = () => {
@@ -11,6 +11,7 @@ const Ngo = () => {
     const dispatch = useDispatch();
 
     const ngoDataFromStore = useSelector((state) => state.ngo.ngoState);
+    const ngoList = useSelector((state) => state.ngo.ngoList);
 
     const handleNgo = (e) => {
         console.log('handleNgo');
@@ -26,10 +27,25 @@ const Ngo = () => {
 
             })
             .catch(() => {
-                alert(`Scheme with ${ngoid} not found.`);
+                alert(`Ngo with ${ngoid} not found.`);
             });
 
         setNgoId('');
+    }
+
+
+
+
+    const submitGetAllNgo = (evt) => {
+        evt.preventDefault();
+        console.log('submitGetAllNgo');
+        getAllNgoService()
+            .then((response) => {
+                dispatch(getAllNgo(response.data));
+            })
+            .catch(() => {
+                alert(`Something is wrong!`);
+            });
     }
 
 
@@ -38,7 +54,7 @@ const Ngo = () => {
             <h1 className="display-4 text-primary mt-3 mb-3" >Ngo Component</h1>
 
             <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                <h3>Find scheme by id</h3>
+                <h3>Find Ngo by id</h3>
                 <form className="form form-group form-primary" onSubmit={submitGetNgoById}>
                     <input className="form-control mt-3" type="number" id="ngoid" name="ngoid" value={ngoid} onChange={handleNgo} placeholder="Enter Ngo Id" autoFocus required />
                     <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
@@ -73,6 +89,40 @@ const Ngo = () => {
                     </table>
                                     
             </div>
+
+            <div>
+            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                <h3>Find All ngo</h3>
+                    <div>
+                        <form className="form form-group form-primary">
+                            <input className="mt-3 btn btn-primary btn-block" type="button" onClick={submitGetAllNgo} value="Find All Ngos" />
+                        </form>
+                    </div >
+                    <table className="table table-light table-striped ">
+                        <thead>
+                            <tr>
+                                <th>ngoId</th>
+                                <th>ngoName</th>
+                                <th>ngoLocation</th>
+                                <th>ngoType</th>
+                                <th>ngoMotive</th>
+                                <th>donation</th>
+                                <th>ngoSize</th>
+                                <th>ngoActivities</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {ngoList.map((ngo, k) => {
+                                return (
+                                    <tr k={k}> <td>{ngo.ngoId}</td>  <td>{ngo.ngoName}</td> <td>{ngo.ngoLocation}</td> <td>{ngo.ngoType}</td> <td>{ngo.ngoMotive}</td> <td>{ngo.donation}</td> <td>{ngo.ngoSize}</td> <td>{ngo.ngoActivities}</td></tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>              
+                      </div>
+            </div>
+
+
         </div>
     );
 }
