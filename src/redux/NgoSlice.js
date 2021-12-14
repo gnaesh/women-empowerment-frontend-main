@@ -23,7 +23,7 @@ export const {getNgoById} = NgoSlice.actions;
 export default NgoSlice.reducer;
 
 
-
+//
 
 
 
