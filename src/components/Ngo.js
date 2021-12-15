@@ -1,7 +1,7 @@
-import { getNgoById, getAllNgo, getNgoByLocation , getNgoByMotive } from "../redux/NgoSlice";
+import { getNgoById, getAllNgo, getNgoByLocation, getNgoByMotive, deleteNgoByID } from "../redux/NgoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { getNgoByIdService, getAllNgoService, getNgoByLocationService , getNgoByMotiveService } from "../service/NgoService";
+import { getNgoByIdService, getAllNgoService, getNgoByLocationService, getNgoByMotiveService, deleteNgoService } from "../service/NgoService";
 
 
 const Ngo = () => {
@@ -12,12 +12,15 @@ const Ngo = () => {
 
     const [ngoMotive, setNgoMotive] = useState('');
 
+    const [deleteNgo, setDeleteNgo] = useState('');
+
     const dispatch = useDispatch();
 
     const ngoDataFromStore = useSelector((state) => state.ngo.ngoState);
     const ngoDataFromStoreLocation = useSelector((state) => state.ngo.ngoStateLocation);
     const ngoDataFromStoreMotive = useSelector((state) => state.ngo.ngoStateMotive);
     const ngoList = useSelector((state) => state.ngo.ngoList);
+    const ngoDelete = useSelector((state) => state.ngo.ngoDelete);
 
     const handleNgo = (e) => {
         console.log('handleNgo');
@@ -32,6 +35,11 @@ const Ngo = () => {
     const handleNgoMotive = (m) => {
         console.log('handlelngomotive')
         setNgoMotive(m.target.value);
+    }
+
+    const handleDeleteNgo = (d) => {
+        console.log('handleDeleteNgo');
+        setDeleteNgo(d.target.value);
     }
 
 
@@ -66,7 +74,7 @@ const Ngo = () => {
     }
 
 
-    const submitGetNgoByMotive= (evt) => {
+    const submitGetNgoByMotive = (evt) => {
         evt.preventDefault();
         console.log('submitGetNgoByMotive');
         getNgoByMotiveService(ngoMotive)
@@ -95,6 +103,26 @@ const Ngo = () => {
                 alert(`Something is wrong!`);
             });
     }
+
+
+
+
+    const submitDeleteNgo = (evt) => {
+        evt.preventDefault();
+        console.log('submitDeleteNgo');
+        deleteNgoService(deleteNgo)
+            .then((response) => {
+                alert(`Ngo deleted successfully.`)
+                dispatch(deleteNgoByID(response.data));             // Sending data to redux store
+
+            })
+            .catch(() => {
+                alert(`Ngo with Id ${deleteNgo} not found.`);
+            });
+
+    }
+
+
 
 
     return (
@@ -259,6 +287,48 @@ const Ngo = () => {
                     </table>
                 </div>
             </div>
+
+
+            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                <h3>Delete NGo by Id</h3>
+                <form className="form form-group form-primary" onSubmit={submitDeleteNgo}>
+                    <input className="form-control mt-3" type="number" id="deleteNgo" name="deleteNgo" value={deleteNgo} onChange={handleDeleteNgo} placeholder="Enter Ngo Id" autoFocus required />
+                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Delete Ngo" />
+                </form>
+
+                <table className="table table-light table-striped ">
+                    <thead>
+                        <tr>
+                            <th>ngoId</th>
+                            <th>ngoName</th>
+                            <th>ngoLocation</th>
+                            <th>ngoType</th>
+                            <th>ngoMotive</th>
+                            <th>donation</th>
+                            <th>ngoSize</th>
+                            <th>ngoActivities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{ngoDelete.ngoId}</td>
+                            <td>{ngoDelete.ngoName}</td>
+                            <td>{ngoDelete.ngoLocation}</td>
+                            <td>{ngoDelete.ngoType}</td>
+                            <td>{ngoDelete.ngoMotive}</td>
+                            <td>{ngoDelete.donation}</td>
+                            <td>{ngoDelete.ngoSize}</td>
+                            <td>{ngoDelete.ngoActivities}</td>
+
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
 
 
         </div>

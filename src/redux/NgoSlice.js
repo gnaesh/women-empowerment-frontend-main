@@ -9,7 +9,8 @@ const NgoSlice = createSlice({
         ngoState: new NgoModel(),
         ngoStateLocation: [],
         ngoStateMotive: [],
-        ngoList:[]
+        ngoList:[],
+        ngoDelete : new NgoModel()
     },
 
     reducers: {
@@ -31,13 +32,18 @@ const NgoSlice = createSlice({
         getAllNgo: (state, action) => {
             console.log('NgoSlice reducers getAllNgo');
             state.ngoList = action.payload;
+        },
+
+        deleteNgoByID : (state, action) => {
+            console.log("NgoSlice reducers deleteNgo");
+            state.ngoDelete = action.payload;
         }
     }
 }
 
 );
 
-export const {getNgoById , getAllNgo , getNgoByLocation , getNgoByMotive} = NgoSlice.actions;
+export const {getNgoById , getAllNgo , getNgoByLocation , getNgoByMotive , deleteNgoByID} = NgoSlice.actions;
 export default NgoSlice.reducer;
 
 
