@@ -1,22 +1,39 @@
-import { getNgoById , getAllNgo} from "../redux/NgoSlice";
+import { getNgoById, getAllNgo, getNgoByLocation , getNgoByMotive } from "../redux/NgoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { getNgoByIdService, getAllNgoService } from "../service/NgoService";
+import { getNgoByIdService, getAllNgoService, getNgoByLocationService , getNgoByMotiveService } from "../service/NgoService";
 
 
 const Ngo = () => {
 
     const [ngoid, setNgoId] = useState('');
 
+    const [ngoLocation, setNgoLocation] = useState('');
+
+    const [ngoMotive, setNgoMotive] = useState('');
+
     const dispatch = useDispatch();
 
     const ngoDataFromStore = useSelector((state) => state.ngo.ngoState);
+    const ngoDataFromStoreLocation = useSelector((state) => state.ngo.ngoStateLocation);
+    const ngoDataFromStoreMotive = useSelector((state) => state.ngo.ngoStateMotive);
     const ngoList = useSelector((state) => state.ngo.ngoList);
 
     const handleNgo = (e) => {
         console.log('handleNgo');
         setNgoId(e.target.value);
     }
+
+    const handleNgoLocation = (l) => {
+        console.log('handlelngolocation')
+        setNgoLocation(l.target.value);
+    }
+
+    const handleNgoMotive = (m) => {
+        console.log('handlelngomotive')
+        setNgoMotive(m.target.value);
+    }
+
 
     const submitGetNgoById = (evt) => {
         evt.preventDefault();
@@ -31,6 +48,37 @@ const Ngo = () => {
             });
 
         setNgoId('');
+    }
+
+    const submitGetNgoByLocation = (evt) => {
+        evt.preventDefault();
+        console.log('submitGetNgoByLocation');
+        getNgoByLocationService(ngoLocation)
+            .then((response) => {
+                dispatch(getNgoByLocation(response.data));             // Sending data to redux store
+
+            })
+            .catch(() => {
+                alert(`Ngo with ${ngoLocation} location not found.`);
+            });
+
+        setNgoLocation('');
+    }
+
+
+    const submitGetNgoByMotive= (evt) => {
+        evt.preventDefault();
+        console.log('submitGetNgoByMotive');
+        getNgoByMotiveService(ngoMotive)
+            .then((response) => {
+                dispatch(getNgoByMotive(response.data));             // Sending data to redux store
+
+            })
+            .catch(() => {
+                alert(`Ngo with ${ngoMotive} Motive not found.`);
+            });
+
+        setNgoMotive('');
     }
 
 
@@ -61,38 +109,128 @@ const Ngo = () => {
                 </form>
 
                 <table className="table table-light table-striped ">
-                        <thead>
-                            <tr>
-                                <th>ngoId</th>
-                                <th>ngoName</th>
-                                <th>ngoLocation</th>
-                                <th>ngoType</th>
-                                <th>ngoMotive</th>
-                                <th>donation</th>
-                                <th>ngoSize</th>
-                                <th>ngoActivities</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{ngoDataFromStore.ngoId}</td>
-                                <td>{ngoDataFromStore.ngoName}</td>
-                                <td>{ngoDataFromStore.ngoLocation}</td>
-                                <td>{ngoDataFromStore.ngoType}</td>
-                                <td>{ngoDataFromStore.ngoMotive}</td>
-                                <td>{ngoDataFromStore.donation}</td>
-                                <td>{ngoDataFromStore.ngoSize}</td>
-                                <td>{ngoDataFromStore.ngoActivities}</td>
+                    <thead>
+                        <tr>
+                            <th>ngoId</th>
+                            <th>ngoName</th>
+                            <th>ngoLocation</th>
+                            <th>ngoType</th>
+                            <th>ngoMotive</th>
+                            <th>donation</th>
+                            <th>ngoSize</th>
+                            <th>ngoActivities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{ngoDataFromStore.ngoId}</td>
+                            <td>{ngoDataFromStore.ngoName}</td>
+                            <td>{ngoDataFromStore.ngoLocation}</td>
+                            <td>{ngoDataFromStore.ngoType}</td>
+                            <td>{ngoDataFromStore.ngoMotive}</td>
+                            <td>{ngoDataFromStore.donation}</td>
+                            <td>{ngoDataFromStore.ngoSize}</td>
+                            <td>{ngoDataFromStore.ngoActivities}</td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                                    
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
 
-            <div>
+
+
             <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                <h3>Find All ngo</h3>
+                <h3>Find Ngo by Location</h3>
+                <form className="form form-group form-primary" onSubmit={submitGetNgoByLocation}>
+                    <input className="form-control mt-3" type="text" id="ngoLocation" name="ngoLocation" value={ngoLocation} onChange={handleNgoLocation} placeholder="Enter Ngo location" autoFocus required />
+                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                </form>
+
+                <table className="table table-light table-striped ">
+                    <thead>
+                        <tr>
+                            <th>ngoId</th>
+                            <th>ngoName</th>
+                            <th>ngoLocation</th>
+                            <th>ngoType</th>
+                            <th>ngoMotive</th>
+                            <th>donation</th>
+                            <th>ngoSize</th>
+                            <th>ngoActivities</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {ngoDataFromStoreLocation.map((ngo, key) => {
+                            return (
+                                <tr key={key}>  <td>{ngo.ngoId}</td>
+                                    <td>{ngo.ngoName}</td>
+                                    <td>{ngo.ngoLocation}</td>
+                                    <td>{ngo.ngoType}</td>
+                                    <td>{ngo.ngoMotive}</td>
+                                    <td>{ngo.donation}</td>
+                                    <td>{ngo.ngoSize}</td>
+                                    <td>{ngo.ngoActivities}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+
+
+            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                <h3>Find Ngo by Motive</h3>
+                <form className="form form-group form-primary" onSubmit={submitGetNgoByMotive}>
+                    <input className="form-control mt-3" type="text" id="ngoMotive" name="ngoMotive" value={ngoMotive} onChange={handleNgoMotive} placeholder="Enter Ngo Motive" autoFocus required />
+                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                </form>
+
+                <table className="table table-light table-striped ">
+                    <thead>
+                        <tr>
+                            <th>ngoId</th>
+                            <th>ngoName</th>
+                            <th>ngoLocation</th>
+                            <th>ngoType</th>
+                            <th>ngoMotive</th>
+                            <th>donation</th>
+                            <th>ngoSize</th>
+                            <th>ngoActivities</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {ngoDataFromStoreMotive.map((ngo, key) => {
+                            return (
+                                <tr key={key}>  <td>{ngo.ngoId}</td>
+                                    <td>{ngo.ngoName}</td>
+                                    <td>{ngo.ngoLocation}</td>
+                                    <td>{ngo.ngoType}</td>
+                                    <td>{ngo.ngoMotive}</td>
+                                    <td>{ngo.donation}</td>
+                                    <td>{ngo.ngoSize}</td>
+                                    <td>{ngo.ngoActivities}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+
+
+            <div>
+                <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                    <h3>Find All ngo</h3>
                     <div>
                         <form className="form form-group form-primary">
                             <input className="mt-3 btn btn-primary btn-block" type="button" onClick={submitGetAllNgo} value="Find All Ngos" />
@@ -112,14 +250,14 @@ const Ngo = () => {
                             </tr>
                         </thead>
                         <tbody>
-                        {ngoList.map((ngo, k) => {
+                            {ngoList.map((ngo, k) => {
                                 return (
                                     <tr k={k}> <td>{ngo.ngoId}</td>  <td>{ngo.ngoName}</td> <td>{ngo.ngoLocation}</td> <td>{ngo.ngoType}</td> <td>{ngo.ngoMotive}</td> <td>{ngo.donation}</td> <td>{ngo.ngoSize}</td> <td>{ngo.ngoActivities}</td></tr>
                                 )
                             })}
                         </tbody>
-                    </table>              
-                      </div>
+                    </table>
+                </div>
             </div>
 
 

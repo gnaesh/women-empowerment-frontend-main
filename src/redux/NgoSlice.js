@@ -7,6 +7,8 @@ const NgoSlice = createSlice({
     initialState: {
 
         ngoState: new NgoModel(),
+        ngoStateLocation: [],
+        ngoStateMotive: [],
         ngoList:[]
     },
 
@@ -14,6 +16,16 @@ const NgoSlice = createSlice({
         getNgoById: (state, action) => {
             console.log("NgoSlice reducers getNgoById");
             state.ngoState = action.payload;
+        },
+
+        getNgoByLocation: (state, action) => {
+            console.log("NgoSlice reducers getNgoByLocation");
+            state.ngoStateLocation = action.payload;
+        },
+
+        getNgoByMotive: (state, action) => {
+            console.log("NgoSlice reducers getNgoByMotive");
+            state.ngoStateMotive = action.payload;
         },
 
         getAllNgo: (state, action) => {
@@ -25,7 +37,7 @@ const NgoSlice = createSlice({
 
 );
 
-export const {getNgoById , getAllNgo} = NgoSlice.actions;
+export const {getNgoById , getAllNgo , getNgoByLocation , getNgoByMotive} = NgoSlice.actions;
 export default NgoSlice.reducer;
 
 

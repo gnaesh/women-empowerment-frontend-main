@@ -11,6 +11,17 @@ const getAllNgoService = () => {
     return axios.get(`getallngo`);
 }
 
+const getNgoByLocationService = (ngolocation) => {
+    console.log(`getNgoByLocationService`);
+    return axios.get(`/getngobylocation/${ngolocation}`);
+}
+
+const getNgoByMotiveService = (ngomotive) => {
+    console.log(`getNgoByLocationService`);
+    return axios.get(`/getmgobymotive/${ngomotive}`);
+}
+
+
 // const addEmpService = (emp) => {
 //     console.log(`getEmpByIdService`);
 //     return axios.post(`/emp/addemp`, emp);
@@ -31,4 +42,4 @@ const getAllNgoService = () => {
 //     return axios.post(`/emp/getbyname/${firstName}`);
 // }
 
-export { getNgoByIdService , getAllNgoService};
+export { getNgoByIdService , getAllNgoService, getNgoByLocationService, getNgoByMotiveService};
