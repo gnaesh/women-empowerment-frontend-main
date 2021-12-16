@@ -324,18 +324,15 @@ const Ngo = () => {
 
 
 
-
-  
-
   <div class="card">
     <div class="card-header" id="headingTwo">
       <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse1" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapselast" aria-expanded="false" aria-controls="collapselast">
           <h5>Find Ngo By Location</h5>
         </button>
       </h5>
     </div>
-    <div id="collapsen1" class="collapsen1" aria-labelledby="headingTwo" data-parent="#accordion">
+    <div id="collapselast" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
       <div class="card-body">
 
       <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
@@ -376,8 +373,8 @@ const Ngo = () => {
       </div>
     </div>
   </div>
-
 </div>
+  
 </div>
                     );
 }
@@ -416,13 +413,13 @@ const Ngo = () => {
 
 
 
-// import { getNgoById, getAllNgo, getNgoByLocation, getNgoByMotive, deleteNgoByID } from "../redux/NgoSlice";
+{/* // import { getNgoById, getAllNgo, getNgoByLocation, getNgoByMotive, deleteNgoByID } from "../redux/NgoSlice";
 // import { useDispatch, useSelector } from "react-redux";
 // import { useState } from "react";
 // import { getNgoByIdService, getAllNgoService, getNgoByLocationService, getNgoByMotiveService, deleteNgoService } from "../service/NgoService";
 
 
-// const Ngo = () => {
+// const Ngo = () => { */}
 
 //     const [ngoid, setNgoId] = useState('');
 
