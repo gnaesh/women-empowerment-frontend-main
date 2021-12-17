@@ -37,13 +37,23 @@ const NgoSlice = createSlice({
         deleteNgoByID : (state, action) => {
             console.log("NgoSlice reducers deleteNgo");
             state.ngoDelete = action.payload;
+        },
+
+        addNgo : (state, action) => {
+            console.log("NgoSlice reducers addScheme");
+            state.ngoAdd = action.payload;
+        },
+
+        updateNgo:(state,action)=>{
+            console.log("FeedbackSlice reducers updateNgo");
+            state.ngoUpdate=action.payload;
         }
     }
 }
 
 );
 
-export const {getNgoById , getAllNgo , getNgoByLocation , getNgoByMotive , deleteNgoByID} = NgoSlice.actions;
+export const {getNgoById , getAllNgo , getNgoByLocation , getNgoByMotive , deleteNgoByID , addNgo , updateNgo} = NgoSlice.actions;
 export default NgoSlice.reducer;
 
 

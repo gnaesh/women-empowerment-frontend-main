@@ -26,6 +26,16 @@ const deleteNgoService = (deleteNgo) => {
     return axios.delete(`/deletengobyngoid/${deleteNgo}`);
 }
 
+const addNgoService = (add) => {
+    console.log('addNgoService');
+    return axios.post(`/addngo`,add);
+}
+
+const updateNgoService=(add)=>{
+    console.log("updateNgoService");
+    return axios.put(`/updatengo`,add);
+}
+
 // const addEmpService = (emp) => {
 //     console.log(`getEmpByIdService`);
 //     return axios.post(`/emp/addemp`, emp);
@@ -46,4 +56,4 @@ const deleteNgoService = (deleteNgo) => {
 //     return axios.post(`/emp/getbyname/${firstName}`);
 // }
 
-export { getNgoByIdService , getAllNgoService, getNgoByLocationService, getNgoByMotiveService , deleteNgoService};
+export { getNgoByIdService , getAllNgoService, getNgoByLocationService, getNgoByMotiveService , deleteNgoService , addNgoService , updateNgoService};
