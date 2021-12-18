@@ -6,7 +6,6 @@ import NgoModel from "../model/NgoModel"
 
 
 const UserNgoComponent = () => {
-    const [ngo, setNgo] = useState(new NgoModel());
 
     const [ngoData, setNgoData] = useState(new NgoModel());
 
@@ -16,6 +15,7 @@ const UserNgoComponent = () => {
     const ngoDataFromStoreLocation = useSelector((state) => state.ngo.ngoStateLocation);
     const ngoDataFromStoreMotive = useSelector((state) => state.ngo.ngoStateMotive);
     const ngoList = useSelector((state) => state.ngo.ngoList);
+
 
     const handleNgoData = (e) => {
         console.log(e);
@@ -58,7 +58,7 @@ const UserNgoComponent = () => {
 
     }
 
-// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
     const submitGetNgoByMotive = (evt) => {
         evt.preventDefault();
@@ -74,7 +74,7 @@ const UserNgoComponent = () => {
 
     }
 
-// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
     const submitGetAllNgo = (evt) => {
         evt.preventDefault();
@@ -91,8 +91,10 @@ const UserNgoComponent = () => {
     return (
 
         <div className="container">
+            <br />
+            <h1 className="display-3 text-warning mt-3 mb-3 font-weight-bold text-center" >Ngo Component</h1>
+            <br /><br />
             <div id="accordion">
-
 
                 {/* -------------------------- Find Ngo By Id --------------------------------- */}
                 <div class="card">

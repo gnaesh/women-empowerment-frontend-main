@@ -1,7 +1,7 @@
-import { deleteNgoByID, addNgo, updateNgo, getNgoById, getAllNgo, getNgoByLocation, getNgoByMotive } from "../redux/NgoSlice";
+import { getNgoById, getAllNgo, getNgoByLocation, getNgoByMotive,deleteNgoByID, addNgo, updateNgo } from "../redux/NgoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteNgoService, addNgoService, updateNgoService, getNgoByIdService, getAllNgoService, getNgoByLocationService, getNgoByMotiveService } from "../service/NgoService";
+import {  getNgoByIdService, getAllNgoService, getNgoByLocationService, getNgoByMotiveService ,deleteNgoService, addNgoService, updateNgoService } from "../service/NgoService";
 import NgoModel from "../model/NgoModel"
 import UserNgoComponent from "./UserNgoComponent";
 
@@ -9,12 +9,13 @@ const NgoComponent = () => {
 
     const [ngoData, setNgoData] = useState(new NgoModel());
     const dispatch = useDispatch();
-
-    const ngoDelete = useSelector((state) => state.ngo.ngoDelete);
     const ngoDataFromStore = useSelector((state) => state.ngo.ngoState);
     const ngoDataFromStoreLocation = useSelector((state) => state.ngo.ngoStateLocation);
     const ngoDataFromStoreMotive = useSelector((state) => state.ngo.ngoStateMotive);
     const ngoList = useSelector((state) => state.ngo.ngoList);
+
+
+    const ngoDelete = useSelector((state) => state.ngo.ngoDelete);
 
     const handleNgoData = (e) => {
         console.log(e);
@@ -55,6 +56,7 @@ const NgoComponent = () => {
             });
 
     }
+    
 
     // -----------------------------------------------------------------------------------------
 
@@ -71,7 +73,6 @@ const NgoComponent = () => {
             });
 
     }
-
     const submitGetNgoById = (evt) => {
         evt.preventDefault();
         console.log('submitGetNgoById');
@@ -132,215 +133,215 @@ const NgoComponent = () => {
                 alert(`Ngo not Found`);
             });
     }
+
+
     // -----------------------------------------------------------------------------------------
 
     return (
 
         <div>
             <h1 className="display-3 text-warning mt-3 mb-3 font-weight-bold text-center" >Ngo Component</h1>
-
-
+            {/* <UserNgoComponent /> */}
             <div className="container">
                 <div id="accordion">
-                    {/* <UserNgoComponent />*/}
 
 
-
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <h5>Find Ngo by id</h5>
-                                </button>
-                            </h5>
+{/* -------------------------- Find Ngo By Id --------------------------------- */}
+<div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h5>Find Ngo by id</h5>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                                <form className="form form-group form-primary" onSubmit={submitGetNgoById}>
+                                    <input min="1" className="form-control mt-3" type="number" id="ngoId" name="ngoId" value={ngoData.ngoId} onChange={handleNgoData} placeholder="Enter Ngo Id" autoFocus required />
+                                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                                </form>
+                                <table className="table table-light table-striped ">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th>ngoId</th>
+                                            <th>ngoName</th>
+                                            <th>ngoLocation</th>
+                                            <th>ngoType</th>
+                                            <th>ngoMotive</th>
+                                            <th>donation</th>
+                                            <th>ngoSize</th>
+                                            <th>ngoActivities</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{ngoDataFromStore.ngoId}</td>
+                                            <td>{ngoDataFromStore.ngoName}</td>
+                                            <td>{ngoDataFromStore.ngoLocation}</td>
+                                            <td>{ngoDataFromStore.ngoType}</td>
+                                            <td>{ngoDataFromStore.ngoMotive}</td>
+                                            <td>{ngoDataFromStore.donation}</td>
+                                            <td>{ngoDataFromStore.ngoSize}</td>
+                                            <td>{ngoDataFromStore.ngoActivities}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                                    <form className="form form-group form-primary" onSubmit={submitGetNgoById}>
-                                        <input min="1" className="form-control mt-3" type="number" id="ngoId" name="ngoId" value={ngoData.ngoId} onChange={handleNgoData} placeholder="Enter Ngo Id" autoFocus required />
-                                        <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                    </div>
+                </div>
+
+
+
+                {/* -------------------------- Find All Ngos --------------------------------- */}
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <h5>Find All Ngo</h5>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                                <div>
+                                    <form className="form form-group form-primary">
+                                        <input className="mt-3 btn btn-primary btn-block" type="button" onClick={submitGetAllNgo} value="Find All Ngos" />
                                     </form>
-                                    <table className="table table-light table-striped ">
-                                        <thead class="table-warning">
-                                            <tr>
-                                                <th>ngoId</th>
-                                                <th>ngoName</th>
-                                                <th>ngoLocation</th>
-                                                <th>ngoType</th>
-                                                <th>ngoMotive</th>
-                                                <th>donation</th>
-                                                <th>ngoSize</th>
-                                                <th>ngoActivities</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>{ngoDataFromStore.ngoId}</td>
-                                                <td>{ngoDataFromStore.ngoName}</td>
-                                                <td>{ngoDataFromStore.ngoLocation}</td>
-                                                <td>{ngoDataFromStore.ngoType}</td>
-                                                <td>{ngoDataFromStore.ngoMotive}</td>
-                                                <td>{ngoDataFromStore.donation}</td>
-                                                <td>{ngoDataFromStore.ngoSize}</td>
-                                                <td>{ngoDataFromStore.ngoActivities}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                </div >
+                                <table className="table table-light table-striped ">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th>ngoId</th>
+                                            <th>ngoName</th>
+                                            <th>ngoLocation</th>
+                                            <th>ngoType</th>
+                                            <th>ngoMotive</th>
+                                            <th>donation</th>
+                                            <th>ngoSize</th>
+                                            <th>ngoActivities</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ngoList.map((ngo, k) => {
+                                            return (
+                                                <tr k={k}> <td>{ngo.ngoId}</td>  <td>{ngo.ngoName}</td> <td>{ngo.ngoLocation}</td> <td>{ngo.ngoType}</td> <td>{ngo.ngoMotive}</td> <td>{ngo.donation}</td> <td>{ngo.ngoSize}</td> <td>{ngo.ngoActivities}</td></tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+                </div>
+                {/* ------------------------------------------------------------------------------------------------- */}
 
 
+                {/* -------------------------- Find Ngo By Motive --------------------------------- */}
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                                <h5>Find Ngo By Motive</h5>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
 
-                    {/* -------------------------- Find All Ngos --------------------------------- */}
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <h5>Find All Ngo</h5>
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                                    <div>
-                                        <form className="form form-group form-primary">
-                                            <input className="mt-3 btn btn-primary btn-block" type="button" onClick={submitGetAllNgo} value="Find All Ngos" />
-                                        </form>
-                                    </div >
-                                    <table className="table table-light table-striped ">
-                                        <thead class="table-warning">
-                                            <tr>
-                                                <th>ngoId</th>
-                                                <th>ngoName</th>
-                                                <th>ngoLocation</th>
-                                                <th>ngoType</th>
-                                                <th>ngoMotive</th>
-                                                <th>donation</th>
-                                                <th>ngoSize</th>
-                                                <th>ngoActivities</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {ngoList.map((ngo, k) => {
-                                                return (
-                                                    <tr k={k}> <td>{ngo.ngoId}</td>  <td>{ngo.ngoName}</td> <td>{ngo.ngoLocation}</td> <td>{ngo.ngoType}</td> <td>{ngo.ngoMotive}</td> <td>{ngo.donation}</td> <td>{ngo.ngoSize}</td> <td>{ngo.ngoActivities}</td></tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                                <form className="form form-group form-primary" onSubmit={submitGetNgoByMotive}>
+                                    <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" className="form-control mt-3" type="text" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} placeholder="Enter Ngo Motive" autoFocus required />
+                                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                                </form>
+                                <table className="table table-light table-striped ">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th>ngoId</th>
+                                            <th>ngoName</th>
+                                            <th>ngoLocation</th>
+                                            <th>ngoType</th>
+                                            <th>ngoMotive</th>
+                                            <th>donation</th>
+                                            <th>ngoSize</th>
+                                            <th>ngoActivities</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ngoDataFromStoreMotive.map((ngo, key) => {
+                                            return (
+                                                <tr key={key}>  <td>{ngo.ngoId}</td>
+                                                    <td>{ngo.ngoName}</td>
+                                                    <td>{ngo.ngoLocation}</td>
+                                                    <td>{ngo.ngoType}</td>
+                                                    <td>{ngo.ngoMotive}</td>
+                                                    <td>{ngo.donation}</td>
+                                                    <td>{ngo.ngoSize}</td>
+                                                    <td>{ngo.ngoActivities}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    {/* ------------------------------------------------------------------------------------------------- */}
+                </div>
 
 
-                    {/* -------------------------- Find Ngo By Motive --------------------------------- */}
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
-                                    <h5>Find Ngo By Motive</h5>
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
+                {/* -------------------------- Find Ngo By Location --------------------------------- */}
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapselast" aria-expanded="false" aria-controls="collapselast">
+                                <h5>Find Ngo By Location</h5>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapselast" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
 
-                                <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                                    <form className="form form-group form-primary" onSubmit={submitGetNgoByMotive}>
-                                        <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" className="form-control mt-3" type="text" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} placeholder="Enter Ngo Motive" autoFocus required />
-                                        <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
-                                    </form>
-                                    <table className="table table-light table-striped ">
-                                        <thead class="table-warning">
-                                            <tr>
-                                                <th>ngoId</th>
-                                                <th>ngoName</th>
-                                                <th>ngoLocation</th>
-                                                <th>ngoType</th>
-                                                <th>ngoMotive</th>
-                                                <th>donation</th>
-                                                <th>ngoSize</th>
-                                                <th>ngoActivities</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {ngoDataFromStoreMotive.map((ngo, key) => {
-                                                return (
-                                                    <tr key={key}>  <td>{ngo.ngoId}</td>
-                                                        <td>{ngo.ngoName}</td>
-                                                        <td>{ngo.ngoLocation}</td>
-                                                        <td>{ngo.ngoType}</td>
-                                                        <td>{ngo.ngoMotive}</td>
-                                                        <td>{ngo.donation}</td>
-                                                        <td>{ngo.ngoSize}</td>
-                                                        <td>{ngo.ngoActivities}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
+                                <form className="form form-group form-primary" onSubmit={submitGetNgoByLocation}>
+                                    <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" className="form-control mt-3" type="text" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} placeholder="Enter Ngo location" autoFocus required />
+                                    <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
+                                </form>
+                                <table className="table table-light table-striped ">
+                                    <thead class="table-warning">
+                                        <tr>
+                                            <th>ngoId</th>
+                                            <th>ngoName</th>
+                                            <th>ngoLocation</th>
+                                            <th>ngoType</th>
+                                            <th>ngoMotive</th>
+                                            <th>donation</th>
+                                            <th>ngoSize</th>
+                                            <th>ngoActivities</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ngoDataFromStoreLocation.map((ngo, key) => {
+                                            return (
+                                                <tr key={key}>  <td>{ngo.ngoId}</td>
+                                                    <td>{ngo.ngoName}</td>
+                                                    <td>{ngo.ngoLocation}</td>
+                                                    <td>{ngo.ngoType}</td>
+                                                    <td>{ngo.ngoMotive}</td>
+                                                    <td>{ngo.donation}</td>
+                                                    <td>{ngo.ngoSize}</td>
+                                                    <td>{ngo.ngoActivities}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-
-                    {/* -------------------------- Find Ngo By Location --------------------------------- */}
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapselast" aria-expanded="false" aria-controls="collapselast">
-                                    <h5>Find Ngo By Location</h5>
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapselast" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-
-                                <div className="col-12 border border-light shadow p-3 mb-5 bg-white">
-                                    <form className="form form-group form-primary" onSubmit={submitGetNgoByLocation}>
-                                        <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" className="form-control mt-3" type="text" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} placeholder="Enter Ngo location" autoFocus required />
-                                        <input className="form-control mt-3 btn btn-primary" type="submit" value="Find Ngo" />
-                                    </form>
-                                    <table className="table table-light table-striped ">
-                                        <thead class="table-warning">
-                                            <tr>
-                                                <th>ngoId</th>
-                                                <th>ngoName</th>
-                                                <th>ngoLocation</th>
-                                                <th>ngoType</th>
-                                                <th>ngoMotive</th>
-                                                <th>donation</th>
-                                                <th>ngoSize</th>
-                                                <th>ngoActivities</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {ngoDataFromStoreLocation.map((ngo, key) => {
-                                                return (
-                                                    <tr key={key}>  <td>{ngo.ngoId}</td>
-                                                        <td>{ngo.ngoName}</td>
-                                                        <td>{ngo.ngoLocation}</td>
-                                                        <td>{ngo.ngoType}</td>
-                                                        <td>{ngo.ngoMotive}</td>
-                                                        <td>{ngo.donation}</td>
-                                                        <td>{ngo.ngoSize}</td>
-                                                        <td>{ngo.ngoActivities}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
 
                     {/* -------------------------- Delete Ngo By Id --------------------------------- */}
 
@@ -414,56 +415,56 @@ const NgoComponent = () => {
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Id</b></label>
                                             <div class="col-sm-10">
-                                                <input type="number" class="form-control" id="ngoId" name="ngoId" value={ngoData.ngoId} onChange={handleNgoData} />
+                                                <input type="number" class="form-control" id="ngoId" name="ngoId" value={ngoData.ngoId} onChange={handleNgoData} placeholder="Enter NGO ID Zero (Ex:0)" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Name</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoName" name="ngoName" value={ngoData.ngoName} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoName" name="ngoName" value={ngoData.ngoName} onChange={handleNgoData} placeholder="Enter NGO Name" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Location</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} placeholder="Enter NGo Location " />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Type</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoType" name="ngoType" value={ngoData.ngoType} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoType" name="ngoType" value={ngoData.ngoType} onChange={handleNgoData} placeholder="Enter NGO Type" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label "><b>Ngo Motive</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} placeholder="Enter NGO Motive" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b> Ngo Donation</b></label>
                                             <div class="col-sm-10">
-                                                <input min="1" type="number" class="form-control" id="donation" name="donation" value={ngoData.donation} onChange={handleNgoData} />
+                                                <input min="1" type="number" class="form-control" id="donation" name="donation" value={ngoData.donation} onChange={handleNgoData} placeholder="Enter NGO Donation" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Size</b></label>
                                             <div class="col-sm-10">
-                                                <input min="1" type="number" class="form-control" id="ngoSize" name="ngoSize" value={ngoData.ngoSize} onChange={handleNgoData} />
+                                                <input min="1" type="number" class="form-control" id="ngoSize" name="ngoSize" value={ngoData.ngoSize} onChange={handleNgoData} placeholder="Enter NGO Size" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Activities</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoActivities" name="ngoActivities" value={ngoData.ngoActivities} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoActivities" name="ngoActivities" value={ngoData.ngoActivities} onChange={handleNgoData} placeholder="Enter NGO Activities" />
                                             </div>
                                         </div>
 
@@ -499,49 +500,49 @@ const NgoComponent = () => {
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Name</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoName" name="ngoName" value={ngoData.ngoName} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoName" name="ngoName" value={ngoData.ngoName} onChange={handleNgoData} placeholder="Enter NGO Name" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Location</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoLocation" name="ngoLocation" value={ngoData.ngoLocation} onChange={handleNgoData} placeholder="Enter NGo Location " />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Type</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoType" name="ngoType" value={ngoData.ngoType} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoType" name="ngoType" value={ngoData.ngoType} onChange={handleNgoData} placeholder="Enter NGO Type" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label "><b>Ngo Motive</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoMotive" name="ngoMotive" value={ngoData.ngoMotive} onChange={handleNgoData} placeholder="Enter NGO Motive" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b> Ngo Donation</b></label>
                                             <div class="col-sm-10">
-                                                <input min="1" type="number" class="form-control" id="donation" name="donation" value={ngoData.donation} onChange={handleNgoData} />
+                                                <input min="1" type="number" class="form-control" id="donation" name="donation" value={ngoData.donation} onChange={handleNgoData} placeholder="Enter NGO Donation" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Size</b></label>
                                             <div class="col-sm-10">
-                                                <input min="1" type="number" class="form-control" id="ngoSize" name="ngoSize" value={ngoData.ngoSize} onChange={handleNgoData} />
+                                                <input min="1" type="number" class="form-control" id="ngoSize" name="ngoSize" value={ngoData.ngoSize} onChange={handleNgoData} placeholder="Enter NGO Size" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label"><b>Ngo Activities</b></label>
                                             <div class="col-sm-10">
-                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoActivities" name="ngoActivities" value={ngoData.ngoActivities} onChange={handleNgoData} />
+                                                <input pattern="^[a-zA-z]+([\s][a-zA-Z]+)*$" type="text" class="form-control" id="ngoActivities" name="ngoActivities" value={ngoData.ngoActivities} onChange={handleNgoData} placeholder="Enter NGO Activities" />
                                             </div>
                                         </div>
 

@@ -1,26 +1,20 @@
+import schemeReducer from './SchemeSlice';
 import ngoReducer from './NgoSlice';
-
-
-// steps - 
-// 1. create store - only one 
-// 2. provide the store to index.js 
-// 3. create slices for components (one for each)
-// 4. use slices in components 
+import trainingcourseReducer from './TrainingCourseSlice';
+import feedbackReducer from './FeedbackSlice';
 
 import { configureStore } from "@reduxjs/toolkit";
 
-// note - redux store can be created in multiple different ways. 
-// latest way 
-
-// step 1 for redux 
 console.log('store');
 const store = configureStore(
     {
         reducer: {
-            ngo: ngoReducer
-    
+            scheme : schemeReducer,
+            ngo : ngoReducer,
+            trainingcourse : trainingcourseReducer,
+            feedback : feedbackReducer,   
         }
     }
 );
 
-export default store;  
+export default store;
