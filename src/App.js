@@ -1,13 +1,22 @@
 import './App.css';
-import Ngo from './components/Ngo';
-import Scheme from './components/Scheme';
+import UserNgoComponent from './components/UserNgoComponent';
+import NgoComponent from './components/NgoComponent';
+
 
 
 const App = () => {
   return (
-    <div className="bg-light">
-      <Ngo />
+    <div className='sitaram'> 
+      <NgoComponent />
+      {/* <UserNgoComponent/> */}
+      {/* <InputValidationDemo/> */}
+      {/* <Footer/> */}
     </div>
   );
 }
 export default App;
+
+
+
+
+
